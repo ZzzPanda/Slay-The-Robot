@@ -6,77 +6,441 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=5
+config_version=4
 
-[animation]
-
-compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+_global_script_classes=[ {
+"base": "SerializableData",
+"class": "ActData",
+"language": "GDScript",
+"path": "res://data/readonly/ActData.gd"
+}, {
+"base": "BaseAsyncAction",
+"class": "ActionBasePickCards",
+"language": "GDScript",
+"path": "res://scripts/actions/pick_card_actions/ActionBasePickCards.gd"
+}, {
+"base": "SerializableData",
+"class": "ActionInterceptorData",
+"language": "GDScript",
+"path": "res://data/readonly/ActionInterceptorData.gd"
+}, {
+"base": "Node",
+"class": "ActionInterceptorProcessor",
+"language": "GDScript",
+"path": "res://scripts/action_interceptors/ActionInterceptorProcessor.gd"
+}, {
+"base": "ActionBasePickCards",
+"class": "ActionPickCards",
+"language": "GDScript",
+"path": "res://scripts/actions/pick_card_actions/ActionPickCards.gd"
+}, {
+"base": "PrototypeData",
+"class": "ArtifactData",
+"language": "GDScript",
+"path": "res://data/prototype/ArtifactData.gd"
+}, {
+"base": "Node2D",
+"class": "ArtifactFade",
+"language": "GDScript",
+"path": "res://scripts/combatants/fades/ArtifactFade.gd"
+}, {
+"base": "RefCounted",
+"class": "ArtifactFilter",
+"language": "GDScript",
+"path": "res://data/filters/ArtifactFilter.gd"
+}, {
+"base": "SerializableData",
+"class": "ArtifactPackData",
+"language": "GDScript",
+"path": "res://data/readonly/ArtifactPackData.gd"
+}, {
+"base": "RefCounted",
+"class": "BaseAction",
+"language": "GDScript",
+"path": "res://scripts/actions/BaseAction.gd"
+}, {
+"base": "Resource",
+"class": "BaseActionInterceptor",
+"language": "GDScript",
+"path": "res://scripts/action_interceptors/BaseActionInterceptor.gd"
+}, {
+"base": "Resource",
+"class": "BaseArtifact",
+"language": "GDScript",
+"path": "res://scripts/artifacts/BaseArtifact.gd"
+}, {
+"base": "BaseAction",
+"class": "BaseAsyncAction",
+"language": "GDScript",
+"path": "res://scripts/actions/BaseAsyncAction.gd"
+}, {
+"base": "RefCounted",
+"class": "BaseCardListener",
+"language": "GDScript",
+"path": "res://scripts/card_listeners/BaseCardListener.gd"
+}, {
+"base": "BaseAction",
+"class": "BaseCardsetAction",
+"language": "GDScript",
+"path": "res://scripts/actions/cardset_actions/BaseCardsetAction.gd"
+}, {
+"base": "Control",
+"class": "BaseCombatant",
+"language": "GDScript",
+"path": "res://scripts/combatants/BaseCombatant.gd"
+}, {
+"base": "Control",
+"class": "BaseCustomUI",
+"language": "GDScript",
+"path": "res://scripts/ui/custom/BaseCustomUI.gd"
+}, {
+"base": "Button",
+"class": "BaseRewardButton",
+"language": "GDScript",
+"path": "res://scripts/ui/rewards/BaseRewardButton.gd"
+}, {
+"base": "RefCounted",
+"class": "BaseRunModifier",
+"language": "GDScript",
+"path": "res://scripts/run_modifiers/BaseRunModifier.gd"
+}, {
+"base": "Control",
+"class": "BaseShopButton",
+"language": "GDScript",
+"path": "res://scripts/ui/shop/BaseShopButton.gd"
+}, {
+"base": "RefCounted",
+"class": "BaseStatusEffect",
+"language": "GDScript",
+"path": "res://scripts/status_effects/BaseStatusEffect.gd"
+}, {
+"base": "RefCounted",
+"class": "BaseValidator",
+"language": "GDScript",
+"path": "res://scripts/validators/BaseValidator.gd"
+}, {
+"base": "Control",
+"class": "Card",
+"language": "GDScript",
+"path": "res://scripts/ui/Card.gd"
+}, {
+"base": "PrototypeData",
+"class": "CardData",
+"language": "GDScript",
+"path": "res://data/prototype/CardData.gd"
+}, {
+"base": "RefCounted",
+"class": "CardFilter",
+"language": "GDScript",
+"path": "res://data/filters/CardFilter.gd"
+}, {
+"base": "SerializableData",
+"class": "CardPackData",
+"language": "GDScript",
+"path": "res://data/readonly/CardPackData.gd"
+}, {
+"base": "RefCounted",
+"class": "CardPlayRequest",
+"language": "GDScript",
+"path": "res://data/CardPlayRequest.gd"
+}, {
+"base": "SerializableData",
+"class": "CharacterData",
+"language": "GDScript",
+"path": "res://data/readonly/CharacterData.gd"
+}, {
+"base": "SerializableData",
+"class": "ColorData",
+"language": "GDScript",
+"path": "res://data/readonly/ColorData.gd"
+}, {
+"base": "RefCounted",
+"class": "CombatEndTurn",
+"language": "GDScript",
+"path": "res://scripts/ui/CombatEndTurn.gd"
+}, {
+"base": "SerializableData",
+"class": "CombatStatsData",
+"language": "GDScript",
+"path": "res://data/mutable/CombatStatsData.gd"
+}, {
+"base": "TextureButton",
+"class": "ConsumableButton",
+"language": "GDScript",
+"path": "res://scripts/ui/ConsumableButton.gd"
+}, {
+"base": "SerializableData",
+"class": "ConsumableData",
+"language": "GDScript",
+"path": "res://data/readonly/ConsumableData.gd"
+}, {
+"base": "ScrollDamper",
+"class": "CubicScrollDamper",
+"language": "GDScript",
+"path": "res://addons/smooth_scroll_container/scroll_damper/cubic_scroll_damper.gd"
+}, {
+"base": "RefCounted",
+"class": "CustomSignal",
+"language": "GDScript",
+"path": "res://data/readonly/modding/CustomSignal.gd"
+}, {
+"base": "SerializableData",
+"class": "CustomSignalData",
+"language": "GDScript",
+"path": "res://data/readonly/modding/CustomSignalData.gd"
+}, {
+"base": "SerializableData",
+"class": "CustomUIData",
+"language": "GDScript",
+"path": "res://data/readonly/modding/CustomUIData.gd"
+}, {
+"base": "SerializableData",
+"class": "DialogueData",
+"language": "GDScript",
+"path": "res://data/readonly/DialogueData.gd"
+}, {
+"base": "PanelContainer",
+"class": "DialogueOption",
+"language": "GDScript",
+"path": "res://scripts/ui/general/DialogueOption.gd"
+}, {
+"base": "SerializableData",
+"class": "DialogueOptionData",
+"language": "GDScript",
+"path": "res://data/readonly/embedded/DialogueOptionData.gd"
+}, {
+"base": "SerializableData",
+"class": "DialogueStateData",
+"language": "GDScript",
+"path": "res://data/readonly/embedded/DialogueStateData.gd"
+}, {
+"base": "BaseCombatant",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://scripts/combatants/Enemy.gd"
+}, {
+"base": "PrototypeData",
+"class": "EnemyData",
+"language": "GDScript",
+"path": "res://data/prototype/EnemyData.gd"
+}, {
+"base": "SerializableData",
+"class": "EventData",
+"language": "GDScript",
+"path": "res://data/readonly/EventData.gd"
+}, {
+"base": "SerializableData",
+"class": "EventPoolData",
+"language": "GDScript",
+"path": "res://data/readonly/EventPoolData.gd"
+}, {
+"base": "ScrollDamper",
+"class": "ExpoScrollDamper",
+"language": "GDScript",
+"path": "res://addons/smooth_scroll_container/scroll_damper/expo_scroll_damper.gd"
+}, {
+"base": "BaseActionInterceptor",
+"class": "InterceptorBaseNegateStatusDecay",
+"language": "GDScript",
+"path": "res://scripts/action_interceptors/status_effect_decay_interceptors/InterceptorBaseNegateStatusDecay.gd"
+}, {
+"base": "SerializableData",
+"class": "KeywordData",
+"language": "GDScript",
+"path": "res://data/readonly/KeywordData.gd"
+}, {
+"base": "Control",
+"class": "LayeredHealthBar",
+"language": "GDScript",
+"path": "res://scripts/combatants/LayeredHealthBar.gd"
+}, {
+"base": "ScrollDamper",
+"class": "LinearScrollDamper",
+"language": "GDScript",
+"path": "res://addons/smooth_scroll_container/scroll_damper/linear_scroll_damper.gd"
+}, {
+"base": "SerializableData",
+"class": "LocationData",
+"language": "GDScript",
+"path": "res://data/mutable/LocationData.gd"
+}, {
+"base": "TextureButton",
+"class": "MapLocation",
+"language": "GDScript",
+"path": "res://scripts/ui/MapLocation.gd"
+}, {
+"base": "SerializableData",
+"class": "ModData",
+"language": "GDScript",
+"path": "res://data/readonly/modding/ModData.gd"
+}, {
+"base": "SerializableData",
+"class": "ModListData",
+"language": "GDScript",
+"path": "res://data/readonly/modding/ModListData.gd"
+}, {
+"base": "BaseCombatant",
+"class": "Player",
+"language": "GDScript",
+"path": "res://scripts/combatants/Player.gd"
+}, {
+"base": "PrototypeData",
+"class": "PlayerData",
+"language": "GDScript",
+"path": "res://data/prototype/PlayerData.gd"
+}, {
+"base": "SerializableData",
+"class": "ProfileData",
+"language": "GDScript",
+"path": "res://data/mutable/ProfileData.gd"
+}, {
+"base": "SerializableData",
+"class": "PrototypeData",
+"language": "GDScript",
+"path": "res://data/PrototypeData.gd"
+}, {
+"base": "ScrollDamper",
+"class": "QuadScrollDamper",
+"language": "GDScript",
+"path": "res://addons/smooth_scroll_container/scroll_damper/quad_scroll_damper.gd"
+}, {
+"base": "Button",
+"class": "RestActionButton",
+"language": "GDScript",
+"path": "res://scripts/ui/RestActionButton.gd"
+}, {
+"base": "SerializableData",
+"class": "RestActionData",
+"language": "GDScript",
+"path": "res://data/readonly/RestActionData.gd"
+}, {
+"base": "SerializableData",
+"class": "RunModifierData",
+"language": "GDScript",
+"path": "res://data/readonly/RunModifierData.gd"
+}, {
+"base": "SerializableData",
+"class": "RunStartOptionData",
+"language": "GDScript",
+"path": "res://data/readonly/RunStartOptionData.gd"
+}, {
+"base": "Resource",
+"class": "ScrollDamper",
+"language": "GDScript",
+"path": "res://addons/smooth_scroll_container/scroll_damper/scroll_damper.gd"
+}, {
+"base": "Resource",
+"class": "SerializableData",
+"language": "GDScript",
+"path": "res://data/SerializableData.gd"
+}, {
+"base": "SerializableData",
+"class": "ShopData",
+"language": "GDScript",
+"path": "res://data/mutable/ShopData.gd"
+}, {
+"base": "ScrollContainer",
+"class": "SmoothScrollContainer",
+"language": "GDScript",
+"path": "res://addons/smooth_scroll_container/SmoothScrollContainer.gd"
+}, {
+"base": "TextureRect",
+"class": "StatusEffect",
+"language": "GDScript",
+"path": "res://scripts/combatants/StatusEffect.gd"
+}, {
+"base": "SerializableData",
+"class": "StatusEffectData",
+"language": "GDScript",
+"path": "res://data/readonly/StatusEffectData.gd"
+}, {
+"base": "Node2D",
+"class": "TextFade",
+"language": "GDScript",
+"path": "res://scripts/combatants/fades/TextFade.gd"
+}, {
+"base": "SerializableData",
+"class": "UserSettingsData",
+"language": "GDScript",
+"path": "res://data/mutable/UserSettingsData.gd"
+} ]
+_global_script_class_icons={
+"ActData": "",
+"ActionBasePickCards": "",
+"ActionInterceptorData": "",
+"ActionInterceptorProcessor": "",
+"ActionPickCards": "",
+"ArtifactData": "",
+"ArtifactFade": "",
+"ArtifactFilter": "",
+"ArtifactPackData": "",
+"BaseAction": "",
+"BaseActionInterceptor": "",
+"BaseArtifact": "",
+"BaseAsyncAction": "",
+"BaseCardListener": "",
+"BaseCardsetAction": "",
+"BaseCombatant": "",
+"BaseCustomUI": "",
+"BaseRewardButton": "",
+"BaseRunModifier": "",
+"BaseShopButton": "",
+"BaseStatusEffect": "",
+"BaseValidator": "",
+"Card": "",
+"CardData": "",
+"CardFilter": "",
+"CardPackData": "",
+"CardPlayRequest": "",
+"CharacterData": "",
+"ColorData": "",
+"CombatEndTurn": "",
+"CombatStatsData": "",
+"ConsumableButton": "",
+"ConsumableData": "",
+"CubicScrollDamper": "",
+"CustomSignal": "",
+"CustomSignalData": "",
+"CustomUIData": "",
+"DialogueData": "",
+"DialogueOption": "",
+"DialogueOptionData": "",
+"DialogueStateData": "",
+"Enemy": "",
+"EnemyData": "",
+"EventData": "",
+"EventPoolData": "",
+"ExpoScrollDamper": "",
+"InterceptorBaseNegateStatusDecay": "",
+"KeywordData": "",
+"LayeredHealthBar": "",
+"LinearScrollDamper": "",
+"LocationData": "",
+"MapLocation": "",
+"ModData": "",
+"ModListData": "",
+"Player": "",
+"PlayerData": "",
+"ProfileData": "",
+"PrototypeData": "",
+"QuadScrollDamper": "",
+"RestActionButton": "",
+"RestActionData": "",
+"RunModifierData": "",
+"RunStartOptionData": "",
+"ScrollDamper": "",
+"SerializableData": "",
+"ShopData": "",
+"SmoothScrollContainer": "",
+"StatusEffect": "",
+"StatusEffectData": "",
+"TextFade": "",
+"UserSettingsData": ""
+}
 
 [application]
 
-config/name="SlayTheRobot"
+config/name="Slay The Robot"
+config/description="A deck-building roguelike game"
 run/main_scene="res://scenes/Root.tscn"
-config/features=PackedStringArray("4.5")
-config/icon="uid://8kopj5luv8dc"
 
-[autoload]
-
-Signals="*res://autoload/Signals.gd"
-Scenes="*res://autoload/Scenes.gd"
-Scripts="*res://autoload/Scripts.gd"
-FileLoader="*res://autoload/FileLoader.gd"
-Random="*res://autoload/Random.gd"
-Global="*res://autoload/Global.gd"
-ActionHandler="*res://autoload/ActionHandler.gd"
-ActionGenerator="*res://autoload/ActionGenerator.gd"
-DebugLogger="*res://autoload/DebugLogger.gd"
-UIDGenerator="*res://autoload/UIDGenerator.gd"
-
-[debug]
-
-gdscript/warnings/unused_signal=0
-gdscript/warnings/integer_division=0
-
-[display]
-
-window/size/viewport_width=1200
-window/size/viewport_height=700
-window/size/resizable=false
-window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
-
-[android]
-
-display/canvas_resize_policy=2
-display/safe_area_margin=0.0
-
-[dotnet]
-
-project/assembly_name="Slay The Robot"
-
-[input]
-
-left_click={
-"deadzone": 0.5,
-"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
-, Object(InputEventScreenTouch,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"pressed":false,"script":null)
-]
-}
-right_click={
-"deadzone": 0.5,
-"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"double_click":false,"script":null)
-]
-}
-
-[network]
-
-limits/debugger/max_chars_per_second=131072
-
-[rendering]
-
-renderer/rendering_method="gl_compatibility"
-
-[input_devices]
-
-pointing/emulate_touch_from_mouse=true
-textures/vram_compression/import_etc2_astc=true
