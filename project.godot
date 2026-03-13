@@ -8,9 +8,13 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
-config/name="slaytherobot"
+config/name="SlayTheRobot"
 run/main_scene="res://scenes/Root.tscn"
 config/features=PackedStringArray("4.5")
 config/icon="uid://8kopj5luv8dc"
@@ -41,6 +45,11 @@ window/size/resizable=false
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[android]
+
+display/canvas_resize_policy=2
+display/safe_area_margin=0.0
+
 [dotnet]
 
 project/assembly_name="Slay The Robot"
@@ -70,3 +79,4 @@ renderer/rendering_method="gl_compatibility"
 [input_devices]
 
 pointing/emulate_touch_from_mouse=true
+textures/vram_compression/import_etc2_astc=true
