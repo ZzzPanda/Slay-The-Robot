@@ -1,20 +1,25 @@
 #!/bin/bash
 set -e
 
-# Slay-The-Robot Android Build Script
+# Slay-The-Wheelman Android Build Script
 # Usage: ./scripts/build_android.sh [debug|release]
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 ANDROID_SDK_ROOT="${ANDROID_SDK_ROOT:-$HOME/android-sdk}"
+JAVA_HOME_PATH="${JAVA_HOME:-$HOME/Library/Java/JavaVirtualMachines/jbr-17.0.14/Contents/Home}"
 
 # Build type: debug or release (default: debug)
 BUILD_TYPE="${1:-debug}"
 
-echo "=== Slay-The-Robot Android Build ==="
+# Generate timestamp
+TIMESTAMP=$(date +"%Y%m%d_%H%M")
+
+echo "=== Slay-The-Wheelman Android Build ==="
 echo "Project: $PROJECT_DIR"
 echo "Build type: $BUILD_TYPE"
 echo "Android SDK: $ANDROID_SDK_ROOT"
+echo "Timestamp: $TIMESTAMP"
 
 # Check Android SDK
 if [ ! -d "$ANDROID_SDK_ROOT" ]; then
@@ -33,6 +38,7 @@ fi
 # Set environment variables
 export ANDROID_HOME="$ANDROID_SDK_ROOT"
 export ANDROID_SDK_ROOT="$ANDROID_SDK_ROOT"
+export JAVA_HOME="$JAVA_HOME_PATH"
 export PATH="$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools"
 
 # Check required SDK components
@@ -57,24 +63,38 @@ cd "$PROJECT_DIR"
 # Create builds directory if not exists
 mkdir -p builds
 
+# Check export presets
+if [ ! -f "export_presets.cfg" ]; then
+    echo ""
+    echo "ERROR: export_presets.cfg not found!"
+    echo "Please ensure export_presets.cfg exists in the project root."
+    exit 1
+fi
+
+# Output filename with timestamp
+OUTPUT_APK="builds/android_${BUILD_TYPE}_${TIMESTAMP}.apk"
+
 # Build command
-# Note: export_presets.cfg has the actual export path configured
 echo ""
 if [ "$BUILD_TYPE" = "release" ]; then
     echo "Building Android Release..."
-    echo "Output: builds/android/Slay-the-robot-release.apk"
-    godot --headless --export-release "Android" builds/android/Slay-the-robot-release.apk
+    echo "Output: $OUTPUT_APK"
+    godot --headless --export-release "Android" "$OUTPUT_APK"
 else
     echo "Building Android Debug..."
-    echo "Output: builds/android_debug.apk"
-    godot --headless --export-debug "Android" builds/android_debug.apk
+    echo "Output: $OUTPUT_APK"
+    godot --headless --export-debug "Android" "$OUTPUT_APK"
 fi
+
+# Also create a symlink to latest
+ln -sf "android_${BUILD_TYPE}_${TIMESTAMP}.apk" "builds/android_latest.apk"
 
 echo ""
 echo "=== Build Complete ==="
 ls -lh builds/*.apk 2>/dev/null || echo "No APK files found"
 echo ""
-echo "APK generated successfully!"
+echo "APK generated: $OUTPUT_APK"
+echo "Latest APK: builds/android_latest.apk"
 
 # Print troubleshooting info if build failed
 if [ $? -ne 0 ]; then
