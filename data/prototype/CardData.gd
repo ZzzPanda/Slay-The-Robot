@@ -112,7 +112,7 @@ func get_card_name() -> String:
 	var base_name: String = card_name
 	# Apply translation if available
 	if has_node("/root/Translation"):
-		base_name = Translation.tr(card_name)
+		base_name = Translation.t(card_name)
 	
 	if card_upgrade_amount > 0:
 		if card_upgrade_amount > 1:
