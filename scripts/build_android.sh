@@ -74,6 +74,11 @@ fi
 # Output filename with timestamp
 OUTPUT_APK="builds/android_${BUILD_TYPE}_${TIMESTAMP}.apk"
 
+# Force re-import all resources to ensure they're included in export
+echo ""
+echo "Re-importing resources..."
+godot --headless --import
+
 # Build command
 echo ""
 if [ "$BUILD_TYPE" = "release" ]; then
