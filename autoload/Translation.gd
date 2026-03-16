@@ -32,9 +32,6 @@ func _load_translations() -> void:
 		push_error("[Translation] Could not open translations directory")
 		return
 	
-	translations_dir.include_access = false
-	translations_dir.include_hidden = false
-	
 	var files = translations_dir.get_files()
 	for file in files:
 		if file.ends_with(".txt"):
