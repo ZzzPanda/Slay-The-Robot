@@ -37,8 +37,8 @@ func _load_translations() -> void:
 	
 	var files = translations_dir.get_files()
 	for file in files:
-		if file.ends_with(".csv"):
-			var locale = file.get_basename()  # e.g., "zh_CN" from "zh_CN.csv"
+		if file.ends_with(".txt"):
+			var locale = file.get_basename()  # e.g., "zh_CN" from "zh_CN.txt"
 			var path = "res://translations/" + file
 			translations[locale] = _parse_csv(path)
 			print("[Translation] Loaded ", path, " with ", translations[locale].size(), " entries")
@@ -71,8 +71,8 @@ func _parse_csv(path: String) -> Dictionary:
 	return result
 
 ## Main translation function
-## Usage: Translation.tr("key") or tr("key")
-func tr(key: String) -> String:
+## Usage: Translation.t("key")
+func t(key: String) -> String:
 	# First try current locale
 	if translations.has(current_locale):
 		if translations[current_locale].has(key):

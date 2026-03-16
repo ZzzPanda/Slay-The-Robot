@@ -88,8 +88,8 @@ func update_card_display(selected_enemy: Enemy = null) -> void:
 	var type_translated: String = type_key
 	
 	if has_node("/root/Translation"):
-		rarity_translated = Translation.tr(rarity_key)
-		type_translated = Translation.tr(type_key)
+		rarity_translated = Translation.t(rarity_key)
+		type_translated = Translation.t(type_key)
 	
 	card_type.text = rarity_translated + " " + type_translated
 	
