@@ -514,7 +514,9 @@ func _input(event: InputEvent):
 				last_pinch_distance = current_distance
 	
 	if event is InputEventMagnifyGesture:
-		_camera_zoom(event.scale * ZOOM_SPEED * 2)
+		# iOS 双指捏合 - magnification 是倍率，1.0 是默认
+		var delta = (event.magnification - 1.0) * ZOOM_SPEED * 2
+		_camera_zoom(delta)
 
 func _camera_start_drag(mouse_pos: Vector2) -> void:
 	is_dragging = true
