@@ -482,19 +482,17 @@ func _input(event: InputEvent):
 	if not in_combat:
 		return
 	
-	# 鼠标滚轮缩放
-		if not in_combat:
-			return
-		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			_camera_zoom(-ZOOM_SPEED)
-		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			_camera_zoom(ZOOM_SPEED)
-		elif event.button_index == MOUSE_BUTTON_LEFT:
-			if event.pressed:
-				_camera_start_drag(event.position)
-			else:
-				_camera_end_drag()
-		return  # 鼠标事件不继续处理
+	# 鼠标滚轮缩放和拖动
+	if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+		_camera_zoom(-ZOOM_SPEED)
+	elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+		_camera_zoom(ZOOM_SPEED)
+	elif event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_camera_start_drag(event.position)
+		else:
+			_camera_end_drag()
+	return  # 鼠标事件不继续处理
 	
 	# 鼠标拖动
 	if event is InputEventMouseMotion and is_dragging:
@@ -619,6 +617,7 @@ func _on_combat_ended_camera():
 	camera_zoom = 1.0
 	camera_offset = Vector2.ZERO
 	is_pinching = false
+	_apply_camera_transform()
 
 # 移动战斗单位
 func move_combatant(combatant: BaseCombatant, new_x: float) -> void:
