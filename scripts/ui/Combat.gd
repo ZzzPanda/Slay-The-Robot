@@ -501,7 +501,7 @@ func _input(event: InputEvent):
 				_camera_end_drag()
 			is_pinching = false
 	
-	# 移动端双指缩放
+	# 移动端双指缩放 (使用 ScreenDrag 检测)
 	if event is InputEventScreenDrag:
 		if event.index == 1:
 			if not is_pinching:
@@ -512,11 +512,6 @@ func _input(event: InputEvent):
 				var delta = (current_distance - last_pinch_distance) * 0.01
 				_camera_zoom(delta)
 				last_pinch_distance = current_distance
-	
-	if event is InputEventMagnifyGesture:
-		# iOS 双指捏合 - magnification 是倍率，1.0 是默认
-		var delta = (event.magnification - 1.0) * ZOOM_SPEED * 2
-		_camera_zoom(delta)
 
 func _camera_start_drag(mouse_pos: Vector2) -> void:
 	is_dragging = true
