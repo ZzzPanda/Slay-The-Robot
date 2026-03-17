@@ -471,17 +471,22 @@ func start_turn_animation() -> void:
 #region 镜头控制
 
 func _input(event: InputEvent):
-	# 只在战斗中启用镜头控制 (且不是主菜单)
+	# 只在战斗中启用镜头控制
+	# 条件：可见 且 在战斗中(有敌人)
 	if not visible:
 		return
 	
-	# 检查是否在战斗中 (通过检测是否有敌人在场)
-	var enemies = get_tree().get_nodes_in_group("enemies")
-	if len(enemies) == 0:
-		return
+	# 检查是否在战斗中
+	var in_combat = false
+	for node in get_tree().get_nodes_in_group("enemies"):
+		if node is Enemy and node.is_alive():
+			in_combat = true
+			break
 	
-	# 鼠标滚轮缩放
+	# 鼠标事件 - 只在战斗中进行缩放/拖动
 	if event is InputEventMouseButton:
+		if not in_combat:
+			return
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			_camera_zoom(-ZOOM_SPEED)
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
@@ -491,10 +496,16 @@ func _input(event: InputEvent):
 				_camera_start_drag(event.position)
 			else:
 				_camera_end_drag()
+		return  # 鼠标事件不继续处理
 	
 	# 鼠标拖动
 	if event is InputEventMouseMotion and is_dragging:
 		_camera_pan(event.relative)
+		return
+	
+	# 触摸事件 - 只在战斗中进行
+	if not in_combat:
+		return
 	
 	# 移动端触摸处理
 	if event is InputEventScreenTouch:
@@ -505,8 +516,9 @@ func _input(event: InputEvent):
 			if not is_pinching:
 				_camera_end_drag()
 			is_pinching = false
+		return
 	
-	# 移动端双指缩放 (使用 ScreenDrag 检测)
+	# 移动端双指缩放
 	if event is InputEventScreenDrag:
 		if event.index == 1:
 			if not is_pinching:
