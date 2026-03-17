@@ -2,6 +2,17 @@
 extends Control
 class_name BaseCombatant
 
+# 位置系统
+var position_x: float = 0.0  # 一维坐标 (0-1000)
+
+## 设置战斗单位位置 (一维坐标)
+func set_position_x(x: float) -> void:
+	position_x = clamp(x, 0.0, 1000.0)
+
+## 获取战斗单位位置
+func get_position_x() -> float:
+	return position_x
+
 @onready var block: Sprite2D = $Visible/Block
 @onready var block_amount: Label = $Visible/Block/BlockAmount
 
