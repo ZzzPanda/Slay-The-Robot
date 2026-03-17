@@ -471,20 +471,18 @@ func start_turn_animation() -> void:
 #region 镜头控制
 
 func _input(event: InputEvent):
-	# 只在战斗中启用镜头控制
-	# 条件：可见 且 在战斗中(有敌人)
-	if not visible:
-		return
-	
-	# 检查是否在战斗中
+	# 检查是否在战斗中 - 只在有活着的敌人时处理镜头
 	var in_combat = false
 	for node in get_tree().get_nodes_in_group("enemies"):
 		if node is Enemy and node.is_alive():
 			in_combat = true
 			break
 	
-	# 鼠标事件 - 只在战斗中进行缩放/拖动
-	if event is InputEventMouseButton:
+	# 不在战斗时不处理任何镜头输入
+	if not in_combat:
+		return
+	
+	# 鼠标滚轮缩放
 		if not in_combat:
 			return
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
