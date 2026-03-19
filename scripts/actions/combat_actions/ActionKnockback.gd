@@ -36,10 +36,7 @@ func _execute_action(_targets: Array[BaseCombatant], _player: Player) -> void:
 
 ## 平滑移动到目标位置
 func _move_to_position(target: BaseCombatant, target_x: float, duration: float) -> void:
-	var start_x = target.position_x
-	target.set_position_x(target_x)
-	
-	# 创建补间动画实现平滑移动（可选）
+	# 创建补间动画实现平滑移动
 	var tween = create_tween()
 	tween.tween_property(target, "position_x", target_x, duration).set_trans(Tween.TRANS_SINE)
 

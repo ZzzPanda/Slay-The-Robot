@@ -24,16 +24,23 @@ func _execute_action(_targets: Array[BaseCombatant], _player: Player) -> void:
 	
 	# 应用后坐力到玩家
 	if _player != null:
-		var new_x = _player.position_x + (recoil_force * recoil_direction)
+		var current_x = _player.position_x
+		var new_x = current_x + (recoil_force * recoil_direction)
 		
 		# 限制在战斗区域内
 		new_x = clamp(new_x, 50.0, 950.0)
 		
-		# 移动玩家
-		_player.set_position_x(new_x)
+		# 使用平滑移动动画
+		_move_to_position(_player, new_x, duration)
 		
 		# 发出后坐力信号
 		Signals.player_recoil_started.emit(_player, recoil_force, recoil_direction)
+
+## 平滑移动到目标位置
+func _move_to_position(target: BaseCombatant, target_x: float, duration: float) -> void:
+	# 创建补间动画实现平滑移动
+	var tween = create_tween()
+	tween.tween_property(target, "position_x", target_x, duration).set_trans(Tween.TRANS_SINE)
 	
 	_finish_action()
 
