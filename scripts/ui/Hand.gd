@@ -109,6 +109,13 @@ func _ready():
 	
 	background_button.button_up.connect(_on_background_button_up)
 	
+	# 初始化战斗范围指示器
+	_range_indicator = CombatRangeIndicator.new()
+	add_child(_range_indicator)
+	
+## 战斗范围指示器
+var _range_indicator: CombatRangeIndicator = null
+	
 ## Recalculates the transforms of Card objects in hand and tweens them to their new positions.
 func tween_hand():
 	var cards_in_hand: Array[Card] = get_player_hand_cards()
@@ -188,11 +195,22 @@ func _on_card_hovered(card: Card):
 		else:
 			child.position.y = CARD_UNHOVERED_HEIGHT
 			child.z_index = 0
+	
+	# 显示攻击范围（如果有武器）
+	if _range_indicator != null and card.card_data != null and card.card_data.has_weapon():
+		var range_dict = card.card_data.get_weapon_range()
+		_range_indicator.show_range(range_dict["min"], range_dict["max"])
+	else:
+		_range_indicator.hide_range()
 
 func _on_card_unhovered(_card: Card):
 	for child in get_children():
 		child.position.y = CARD_UNHOVERED_HEIGHT
 		child.z_index = 0
+	
+	# 隐藏攻击范围指示器
+	if _range_indicator != null:
+		_range_indicator.hide_range()
 
 func _on_card_selected(card: Card):
 	# card clicked, attempt to do something with it
