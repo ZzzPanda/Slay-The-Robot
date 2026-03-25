@@ -20,8 +20,10 @@ func _execute_action(_targets: Array[BaseCombatant], _player: Player) -> void:
 	var duration = get_metadata_value("duration", 0.2)
 	
 	# 应用击退
+	var has_targets = false
 	for target in _targets:
 		if target is BaseCombatant:
+			has_targets = true
 			# 计算击退方向：如果目标在击退源右侧，向右推；否则向左推
 			var direction: float = 1.0 if target.position_x > knockback_source_x else -1.0
 			var new_x = target.position_x + (knockback_force * direction)
@@ -32,13 +34,18 @@ func _execute_action(_targets: Array[BaseCombatant], _player: Player) -> void:
 			# 发出击退信号
 			Signals.combatant_knockback_started.emit(target, knockback_force, direction)
 	
-	_finish_action()
+	# 动画完成后 finish action
+	if has_targets:
+		get_tree().create_timer(duration).timeout.connect(_finish_action)
+	else:
+		_finish_action()
 
 ## 平滑移动到目标位置
 func _move_to_position(target: BaseCombatant, target_x: float, duration: float) -> void:
 	# 创建补间动画实现平滑移动
 	var tween = create_tween()
 	tween.tween_property(target, "position_x", target_x, duration).set_trans(Tween.TRANS_SINE)
+	# 注意：不要在这里调用 _finish_action()，因为 tween 是异步的
 
 ## 静态方法：创建击退动作
 static func create_knockback_action(

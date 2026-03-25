@@ -35,14 +35,19 @@ func _execute_action(_targets: Array[BaseCombatant], _player: Player) -> void:
 		
 		# 发出后坐力信号
 		Signals.player_recoil_started.emit(_player, recoil_force, recoil_direction)
+		
+		# 动画完成后 finish action（tween 会在 duration 后完成）
+		get_tree().create_timer(duration).timeout.connect(_finish_action)
+	else:
+		# 如果没有玩家，直接 finish
+		_finish_action()
 
 ## 平滑移动到目标位置
 func _move_to_position(target: BaseCombatant, target_x: float, duration: float) -> void:
 	# 创建补间动画实现平滑移动
 	var tween = create_tween()
 	tween.tween_property(target, "position_x", target_x, duration).set_trans(Tween.TRANS_SINE)
-	
-	_finish_action()
+	# 注意：不要在这里调用 _finish_action()，因为 tween 是异步的
 
 ## 静态方法：创建后坐力动作
 static func create_recoil_action(
