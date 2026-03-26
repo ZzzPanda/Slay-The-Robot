@@ -15,6 +15,7 @@ var BASE_REWARD_BUTTON: PackedScene = load("res://scenes/ui/rewards/BaseRewardBu
 var MONEY_REWARD_BUTTON: PackedScene = load("res://scenes/ui/rewards/MoneyRewardButton.tscn")
 var CARD_REWARD_BUTTON: PackedScene = load("res://scenes/ui/rewards/CardRewardButton.tscn")
 var ARTIFACT_REWARD_BUTTON: PackedScene = load("res://scenes/ui/rewards/ArtifactRewardButton.tscn")
+var CONSUMABLE_REWARD_BUTTON: PackedScene = load("res://scenes/ui/rewards/ConsumableRewardButton.tscn")
 
 var REST_ACTION_BUTTON: PackedScene = load("res://scenes/ui/RestActionButton.tscn")
 

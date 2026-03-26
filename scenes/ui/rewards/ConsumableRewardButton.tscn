@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnConsumableRewardButton123"]
+
+[ext_resource type="Texture2D" uid="uid://nh32y87hcke5" path="res://icon.svg" id="1_abc"]
+[ext_resource type="Script" uid="uid://cnConsumableRewardButton456" path="res://scripts/ui/rewards/ConsumableRewardButton.gd" id="2_xyz"]
+
+[node name="ConsumableRewardButton" type="Button"]
+offset_right = 128.0
+offset_bottom = 31.0
+text = "Reward 1"
+icon = ExtResource("1_abc")
+expand_icon = true
+script = ExtResource("2_xyz")

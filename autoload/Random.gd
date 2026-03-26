@@ -289,6 +289,44 @@ func get_location_artifact_rewards(location_data: LocationData = Global.get_play
 	
 	return returned_artifact_ids
 
+## Gets consumable rewards for the player's current location (treasure chest, miniboss, boss)
+func get_location_consumable_rewards(location_data: LocationData = Global.get_player_location_data(), consumable_count: int = 1) -> Array[String]:
+	var location_type: int = location_data.location_type
+	var returned_consumable_ids: Array[String] = []
+	var rng_consumable_rewards: RandomNumberGenerator = Global.player_data.get_player_rng("rng_consumable_rewards")
+	
+	match location_type:
+		LocationData.LOCATION_TYPES.TREASURE:
+			var weights: Dictionary[Variant, int] = {
+				ConsumableData.CONSUMABLE_RARITIES.COMMON: 50,
+				ConsumableData.CONSUMABLE_RARITIES.UNCOMMON: 35,
+				ConsumableData.CONSUMABLE_RARITIES.RARE: 15,
+			}
+			for _i: int in consumable_count:
+				var random_consumable_rarity: int = Random.get_weighted_selection(rng_consumable_rewards, weights)
+				returned_consumable_ids.append(get_random_consumable_object_id(rng_consumable_rewards, [], []))
+		LocationData.LOCATION_TYPES.MINIBOSS:
+			var weights: Dictionary[Variant, int] = {
+				ConsumableData.CONSUMABLE_RARITIES.COMMON: 25,
+				ConsumableData.CONSUMABLE_RARITIES.UNCOMMON: 50,
+				ConsumableData.CONSUMABLE_RARITIES.RARE: 25,
+			}
+			for _i: int in consumable_count:
+				var random_consumable_rarity: int = Random.get_weighted_selection(rng_consumable_rewards, weights)
+				returned_consumable_ids.append(get_random_consumable_object_id(rng_consumable_rewards, [], []))
+		LocationData.LOCATION_TYPES.BOSS:
+			# Boss gives better consumables
+			var weights: Dictionary[Variant, int] = {
+				ConsumableData.CONSUMABLE_RARITIES.COMMON: 15,
+				ConsumableData.CONSUMABLE_RARITIES.UNCOMMON: 50,
+				ConsumableData.CONSUMABLE_RARITIES.RARE: 35,
+			}
+			for _i: int in consumable_count:
+				var random_consumable_rarity: int = Random.get_weighted_selection(rng_consumable_rewards, weights)
+				returned_consumable_ids.append(get_random_consumable_object_id(rng_consumable_rewards, [], []))
+	
+	return returned_consumable_ids
+
 ### Shops
 
 ## Generates initial prices for given cards in a shop. This will be used in parallel to the cards.
